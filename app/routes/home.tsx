@@ -34,7 +34,10 @@ export default function Home() {
         JSON.parse(resume.value) as Resume
       ))
 
-      console.log("parsedResumes", parsedResumes);
+      // console.log("parsedResumes", parsedResumes);
+      console.log("auth.isAuthenticated:", auth.isAuthenticated);
+      console.log("Puter KV Ready:", kv);
+      console.log("KV LIST RESULT:", await kv.list("resume:*", true));
       
 
       setResumes(parsedResumes || []);
