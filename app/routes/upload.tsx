@@ -49,7 +49,7 @@ const upload = () => {
         jobDescription,
         feedback: '',
     }
-    await kv.set(`resume:${uuid}`, JSON.stringify(data));
+    await kv.set(`resume-${uuid}`, JSON.stringify(data));
 
     setStatusText('Analysing...');
 
@@ -58,13 +58,15 @@ const upload = () => {
         prepareInstructions({jobTitle, jobDescription})
     )
 
-    if(!feedback) return setStatusText('Error : Failed to get feedback. Please try again.');
+    if(!feedback) {
+        console.error("AI feedback returned null");
+        return setStatusText('Error : Failed to get feedback. Please try again.');}
 
     const feefbackText = typeof feedback.message.content === 'string' ?
         feedback.message.content : feedback.message.content[0].text;
 
     data.feedback = JSON.parse(feefbackText);
-    await kv.set(`resume:${uuid}`, JSON.stringify(data));
+    await kv.set(`resume-${uuid}`, JSON.stringify(data));
 
     setStatusText('Analysis complete! Redirecting...');
 

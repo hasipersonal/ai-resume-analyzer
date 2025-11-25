@@ -28,16 +28,13 @@ export default function Home() {
     const loadResumes = async () => {
       setLoadingResumes(true);
 
-      const resumes = (await kv.list('resume:*', true)) as KVItem[];
+      const resumes = (await kv.list('resume-*', true)) as KVItem[];
 
       const parsedResumes = resumes?.map((resume) => (
         JSON.parse(resume.value) as Resume
       ))
 
       // console.log("parsedResumes", parsedResumes);
-      console.log("auth.isAuthenticated:", auth.isAuthenticated);
-      console.log("Puter KV Ready:", kv);
-      console.log("KV LIST RESULT:", await kv.list("resume:*", true));
       
 
       setResumes(parsedResumes || []);
